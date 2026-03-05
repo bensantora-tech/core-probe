@@ -1,0 +1,6 @@
+# 32-bit
+CGO_ENABLED=0 GOOS=linux GOARCH=386 go build -ldflags="-s -w" -o core-probe-x86 main.go
+
+# 64-bit
+CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -o core-probe-x64 main.go
+
