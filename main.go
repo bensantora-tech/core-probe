@@ -495,7 +495,7 @@ func evaluate(cpu CPUInfo, mem MemInfo, disks []DiskInfo, thermals []ThermalInfo
 func printBanner() {
 	fmt.Println("====================================================")
 	fmt.Println("   CORE-PROBE  //  Hardware Diagnostic Toolkit      ")
-	fmt.Println("   v2.0  //  github.com/core-probe                  ")
+	fmt.Println("   v2.0  //  github.com/bensantora-tech/core-probe                  ")
 	fmt.Println("====================================================")
 	fmt.Printf("   host arch : %s/%s\n", runtime.GOOS, runtime.GOARCH)
 	fmt.Println("====================================================")
