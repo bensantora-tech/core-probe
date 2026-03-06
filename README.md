@@ -205,6 +205,7 @@ Intentionally minimal. The entire toolkit is one Go source file.
 ---
 
 ## License
+MIT 
 
-MIT — do what you want with it.
-# core-probe
+## Creator 
+Ben Santora - github.com/bensantora-tech
