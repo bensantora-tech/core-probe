@@ -230,7 +230,7 @@ func probeDisks() []DiskInfo {
 	// Always probe root
 	mountpoints := []string{"/", "/home", "/data", "/var"}
 
-	seen := make(map[uint64]bool)
+	seen := make(map[[2]int32]bool)
 
 	for _, mp := range mountpoints {
 		var stat syscall.Statfs_t
@@ -238,12 +238,11 @@ func probeDisks() []DiskInfo {
 			continue
 		}
 
-		// Deduplicate by total block count + block size fingerprint
-		fskey := stat.Blocks*uint64(stat.Bsize) + uint64(stat.Bsize)
-		if seen[fskey] {
+		// Deduplicate by filesystem ID
+		if seen[stat.Fsid.X__val] {
 			continue
 		}
-		seen[fskey] = true
+		seen[stat.Fsid.X__val] = true
 
 		totalBytes := stat.Blocks * uint64(stat.Bsize)
 		freeBytes := stat.Bfree * uint64(stat.Bsize)
@@ -282,7 +281,7 @@ func probeThermal() []ThermalInfo {
 
 		tempRaw, err := readFileTrimmed(base + "/temp")
 		if err != nil {
-			break // No more zones
+			continue
 		}
 
 		milliC, err := strconv.ParseInt(tempRaw, 10, 64)
@@ -495,7 +494,7 @@ func evaluate(cpu CPUInfo, mem MemInfo, disks []DiskInfo, thermals []ThermalInfo
 func printBanner() {
 	fmt.Println("====================================================")
 	fmt.Println("   CORE-PROBE  //  Hardware Diagnostic Toolkit      ")
-	fmt.Println("   v2.0  //  github.com/bensantora-tech/core-probe                  ")
+	fmt.Println("   v2.0  //  github.com/bensantora-tech/core-probe  ")
 	fmt.Println("====================================================")
 	fmt.Printf("   host arch : %s/%s\n", runtime.GOOS, runtime.GOARCH)
 	fmt.Println("====================================================")
